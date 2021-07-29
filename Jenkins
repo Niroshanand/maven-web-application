@@ -1,0 +1,38 @@
+
+
+node
+{
+def mavenHome = tool name: "maven3.8.1"
+stage( 'Chechout code' )
+{
+git branch: 'development', credentialsId: 'e00fd26e-8317-4f96-98f5-297af3cf0402', url: 'https://github.com/Niroshanand/maven-web-application'
+}
+
+stage( 'Build' )
+{ 
+sh "$(mavenHome)/bin/mvn clean package"
+}
+/*
+  stage('ExecuteSonarQubeReport')
+{
+sh "$(mavenHome)/bin/mvn sonar:sonar"
+}
+stage('UploadArtifactsintoNexus')
+{
+sh "$(mavenHome)/bin/mvn deploy"
+}
+stage('DeployApllicationTomcatServer')
+{
+sshagent(['80558465-f273-4945-9d7b-b3ff111357d8']) {
+sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@52.66.199.129:/opt/apache-tomcat-9.0.50/webapps/"                                                     
+}
+}
+*/
+stage('SendEmailNotification')
+{
+emailext body: '''Build over
+
+regards
+Nirosha A''', subject: 'Build over', to: 'niroshaniru.a@gmail.com'
+}
+}

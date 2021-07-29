@@ -10,16 +10,16 @@ git branch: 'development', credentialsId: 'e00fd26e-8317-4f96-98f5-297af3cf0402'
 
 stage( 'Build' )
 { 
-sh "$(mavenHome)/bin/mvn clean package"
+sh "${mavenHome}/bin/mvn clean package"
 }
 /*
   stage('ExecuteSonarQubeReport')
 {
-sh "$(mavenHome)/bin/mvn sonar:sonar"
+sh "${mavenHome}/bin/mvn sonar:sonar"
 }
 stage('UploadArtifactsintoNexus')
 {
-sh "$(mavenHome)/bin/mvn deploy"
+sh "${mavenHome}/bin/mvn deploy"
 }
 stage('DeployApllicationTomcatServer')
 {
